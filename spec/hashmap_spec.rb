@@ -223,4 +223,24 @@ describe HashMap::HashMap do
       expect(hm.length).to eql(0)
     end
   end
+
+  describe '#length' do
+    it 'initial length is 0' do
+      expect(hm.length).to eql(0)
+    end
+    it 'increase length by 1 with each set(key, value)' do
+      expect { hm.set(key: 'A', value: 'Adam') }.to change { hm.length }.by(1)
+      expect { hm.set(key: 'B', value: 'Barclay') }.to change { hm.length }.by(1)
+    end
+    it 'decrease length by 1 with each remove(key)' do
+      expect { hm.set(key: 'A', value: 'Adam') }.to change { hm.length }.by(1)
+      expect { hm.set(key: 'B', value: 'Barclay') }.to change { hm.length }.by(1)
+      expect { hm.remove(key: 'Z') }.to change { hm.length }.by(0)
+      expect { hm.remove(key: 'A') }.to change { hm.length }.by(-1)
+      expect { hm.remove(key: 'B') }.to change { hm.length }.by(-1)
+      expect { hm.remove(key: 'Z') }.to change { hm.length }.by(0)
+
+      expect(hm.length).to eql(0)
+    end
+  end
 end

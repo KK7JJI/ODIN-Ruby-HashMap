@@ -128,6 +128,7 @@ module HashMap
       buckets.each do |bucket|
         value = bucket.find(key: key)
         bucket.remove(key: key) unless value.nil?
+        self.length -= 1 unless value.nil?
         return value unless value.nil?
       end
 
