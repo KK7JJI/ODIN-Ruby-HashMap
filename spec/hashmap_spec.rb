@@ -138,7 +138,7 @@ describe HashMap::HashMap do
     it 'returns [] on empty hash' do
       expect(hm.keys).to eql([])
     end
-    it 'returns sindle element array when one key, value pair present' do
+    it 'returns single element array when one key, value pair present' do
       hm.set(key: 'MO', value: 'Jefferson City')
       expect(hm.keys).to eql(['MO'])
     end
@@ -163,7 +163,7 @@ describe HashMap::HashMap do
     it 'returns [] on empty hash' do
       expect(hm.values).to eql([])
     end
-    it 'returns sindle element array when one key, value pair present' do
+    it 'returns single element array when one key, value pair present' do
       hm.set(key: 'MO', value: 'Jefferson City')
       expect(hm.values).to eql(['Jefferson City'])
     end
@@ -181,6 +181,30 @@ describe HashMap::HashMap do
 
       expect(result.all? { |value| compare.include?(value) }).to eql(true)
       expect(compare.all? { |value| result.include?(value) }).to eql(true)
+    end
+  end
+
+  describe '#entries' do
+    it 'returns [] on empty hash' do
+      expect(hm.entries).to eql([])
+    end
+    it 'returns single entry when one key, value pair present' do
+      hm.set(key: 'MO', value: 'Jefferson City')
+      expect(hm.entries).to eql([['MO', 'Jefferson City']])
+    end
+
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'retrieves all entries in hash' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      result = hm.entries
+
+      expect(result.all? { |entry| arr.include?(entry) }).to eql(true)
+      expect(arr.all? { |entry| result.include?(entry) }).to eql(true)
     end
   end
 end
