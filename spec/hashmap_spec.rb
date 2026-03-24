@@ -74,4 +74,31 @@ describe HashMap::HashMap do
       expect(hm.get(key: 'test')).to be_nil
     end
   end
+
+  describe '#has(key)' do
+    it 'returns false on empty list' do
+      expect(hm.has?('test')).to eql(false)
+    end
+    it 'returns false when key not found' do
+      hm.set(key: 'Happy', value: 'Happy Valley')
+      expect(hm.has?('test')).to eql(false)
+    end
+    it 'returns true when key found single item' do
+      hm.set(key: 'Happy', value: 'Happy Valley')
+      expect(hm.has?('Happy')).to eql(true)
+    end
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'checks individual keys and returns true if found' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      arr.each do |key, value|
+        expect(hm.has?(key)).to eql(true)
+      end
+      expect(hm.has?('test')).to eql(false)
+    end
+  end
 end

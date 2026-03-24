@@ -25,6 +25,12 @@ module HashMap
       find_key_in_buckets(key: key)
     end
 
+    def has?(key)
+      return false unless get(key: key)
+
+      true
+    end
+
     def to_a
       result = []
       buckets.each do |bucket|
