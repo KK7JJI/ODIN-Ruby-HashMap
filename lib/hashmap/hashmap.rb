@@ -31,6 +31,10 @@ module HashMap
       true
     end
 
+    def remove(key: nil)
+      remove_key_from_hash(key: key)
+    end
+
     def to_a
       result = []
       buckets.each do |bucket|
@@ -94,6 +98,17 @@ module HashMap
     def find_key_in_buckets(key: nil)
       buckets.each do |bucket|
         value = bucket.find(key: key)
+        return value unless value.nil?
+      end
+
+      # return nil if key not found.
+      nil
+    end
+
+    def remove_key_from_hash(key: nil)
+      buckets.each do |bucket|
+        value = bucket.find(key: key)
+        bucket.remove(key: key) unless value.nil?
         return value unless value.nil?
       end
 

@@ -101,4 +101,36 @@ describe HashMap::HashMap do
       expect(hm.has?('test')).to eql(false)
     end
   end
+
+  describe '#remove(key)' do
+    it 'returns nil when run against an empty list' do
+      expect(hm.remove(key: 'test')).to be_nil
+    end
+    it 'returns nil when key is not found' do
+      hm.set(key: 'L.', value: 'L. Arabia')
+      expect(hm.remove(key: 'test')).to be_nil
+    end
+
+    it 'removes key,value pair when key is in hash.' do
+      hm.set(key: 'L.', value: 'L. Arabia')
+      expect(hm.remove(key: 'L.')).to eql('L. Arabia')
+      expect(hm.has?('L.')).to eql(false)
+    end
+
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'finds individual keys and returns corresponding values' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      arr.each do |key, value|
+        expect(hm.has?(key)).to eql(true)
+        expect(hm.remove(key: key)).to eql(value)
+        expect(hm.has?(key)).to eql(false)
+      end
+      expect(hm).to be_empty
+    end
+  end
 end
