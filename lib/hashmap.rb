@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'hashmap/hashmap'
+require_relative 'hashmap/linkedlist'
 
 hash_func = lambda do |key|
   hash_code = 0
