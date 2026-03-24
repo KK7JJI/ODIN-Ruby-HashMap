@@ -17,7 +17,7 @@ ODIN Ruby Project: HashMap
 - #has?(key) (done)
 - #remove(key) (done)
 - #length (done)
-- #clear
+- #clear (done)
 - #keys (done)
 - #values (done)
-- #entries
+- #entries (done)
