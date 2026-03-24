@@ -133,4 +133,29 @@ describe HashMap::HashMap do
       expect(hm).to be_empty
     end
   end
+
+  describe '#keys' do
+    it 'returns [] on empty hash' do
+      expect(hm.keys).to eql([])
+    end
+    it 'returns sindle element array when one key, value pair present' do
+      hm.set(key: 'MO', value: 'Jefferson City')
+      expect(hm.keys).to eql(['MO'])
+    end
+
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'retrieves all keys in hash' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      result = hm.keys
+      compare = arr.map { |key, _value| key }
+
+      expect(result.all? { |key| compare.include?(key) }).to eql(true)
+      expect(compare.all? { |key| result.include?(key) }).to eql(true)
+    end
+  end
 end

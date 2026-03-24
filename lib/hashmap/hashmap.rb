@@ -35,6 +35,10 @@ module HashMap
       remove_key_from_hash(key: key)
     end
 
+    def keys
+      to_a.map { |key, _value| key }
+    end
+
     def to_a
       result = []
       buckets.each do |bucket|

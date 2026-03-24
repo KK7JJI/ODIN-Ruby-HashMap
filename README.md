@@ -14,8 +14,8 @@ ODIN Ruby Project: HashMap
 - #hash(key) <- private method
 - #set(key, value) (done)
 - #get(key) (done)
-- #has?(key)
-- #remove(key)
+- #has?(key) (done)
+- #remove(key) (done)
 - #length (done)
 - #clear
 - #keys
