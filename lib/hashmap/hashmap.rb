@@ -16,7 +16,6 @@ module HashMap
 
     def set(key: nil, value: nil)
       add_to_bucket(key: key, value: value)
-      self.length += 1
     end
 
     def get(key: nil)
@@ -111,7 +110,9 @@ module HashMap
       idx = index(key: key)
       raise IndexError if idx.negative? || idx >= @buckets.length
 
-      buckets[idx].append(key: key, value: value)
+      self.length += 1 unless has?(key)
+      buckets[idx].update(key: key, value: value) if has?(key)
+      buckets[idx].append(key: key, value: value) unless has?(key)
     end
 
     def find_key_in_buckets(key: nil)

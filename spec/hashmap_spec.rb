@@ -235,12 +235,40 @@ describe HashMap::HashMap do
     it 'decrease length by 1 with each remove(key)' do
       expect { hm.set(key: 'A', value: 'Adam') }.to change { hm.length }.by(1)
       expect { hm.set(key: 'B', value: 'Barclay') }.to change { hm.length }.by(1)
+      expect { hm.set(key: 'A', value: 'Alex') }.to change { hm.length }.by(0)
       expect { hm.remove(key: 'Z') }.to change { hm.length }.by(0)
       expect { hm.remove(key: 'A') }.to change { hm.length }.by(-1)
       expect { hm.remove(key: 'B') }.to change { hm.length }.by(-1)
       expect { hm.remove(key: 'Z') }.to change { hm.length }.by(0)
 
       expect(hm.length).to eql(0)
+    end
+  end
+
+  describe '#set(key, value) - update values' do
+    it 'set will update existing entry' do
+      hm.set(key: 'A', value: 'Adam')
+      hm.set(key: 'A', value: 'Alex')
+      expect(hm.to_a).to eql([%w[A Alex]])
+      expect(hm.length).to eql(1)
+    end
+
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    let(:arr3) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, i] } }
+    let(:arr4) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, i] } }
+    it 'set, retrieve, and modify all entries in hash' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+      arr.each { |key, value| expect(hm.get(key: key)).to eql(value) }
+
+      arr = arr3 + arr4
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+      arr.each { |key, value| expect(hm.get(key: key)).to eql(value) }
     end
   end
 end

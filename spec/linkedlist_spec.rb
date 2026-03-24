@@ -100,4 +100,15 @@ describe HashMap::LinkedList do
       end
     end
   end
+
+  describe '#update' do
+    it 'update list values' do
+      ll.append(key: 'A', value: 'Adam')
+      ll.append(key: 'B', value: 'Brad')
+      ll.update(key: 'A', value: 'Allan')
+      ll.update(key: 'B', value: 'Betty')
+      expect(ll.find(key: 'A')).to eql('Allan')
+      expect(ll.find(key: 'B')).to eql('Betty')
+    end
+  end
 end

@@ -14,6 +14,11 @@ module HashMap
       send(append_methods, new_node)
     end
 
+    def update(key: nil, value: nil)
+      node = match_key_node(node: start, key: key)
+      node.value = value unless node.nil?
+    end
+
     def find(key: nil)
       match_key_value(node: start, key: key)
     end
@@ -79,6 +84,14 @@ module HashMap
       return nil if node.child.nil?
 
       match_key_value(node: node.child, key: key)
+    end
+
+    def match_key_node(node: nil, key: nil)
+      return nil if node.nil?
+      return node if node.key == key
+      return nil if node.child.nil?
+
+      match_key_node(node: node.child, key: key)
     end
 
     def append_methods
