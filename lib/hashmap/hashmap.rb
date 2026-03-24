@@ -39,6 +39,10 @@ module HashMap
       to_a.map { |key, _value| key }
     end
 
+    def values
+      to_a.map { |_key, value| value }
+    end
+
     def to_a
       result = []
       buckets.each do |bucket|

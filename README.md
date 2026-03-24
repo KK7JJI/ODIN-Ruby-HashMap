@@ -18,6 +18,6 @@ ODIN Ruby Project: HashMap
 - #remove(key) (done)
 - #length (done)
 - #clear
-- #keys
-- #values
+- #keys (done)
+- #values (done)
 - #entries

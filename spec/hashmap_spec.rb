@@ -158,4 +158,29 @@ describe HashMap::HashMap do
       expect(compare.all? { |key| result.include?(key) }).to eql(true)
     end
   end
+
+  describe '#values' do
+    it 'returns [] on empty hash' do
+      expect(hm.values).to eql([])
+    end
+    it 'returns sindle element array when one key, value pair present' do
+      hm.set(key: 'MO', value: 'Jefferson City')
+      expect(hm.values).to eql(['Jefferson City'])
+    end
+
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'retrieves all values in hash' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      result = hm.values
+      compare = arr.map { |_key, value| value }
+
+      expect(result.all? { |value| compare.include?(value) }).to eql(true)
+      expect(compare.all? { |value| result.include?(value) }).to eql(true)
+    end
+  end
 end
