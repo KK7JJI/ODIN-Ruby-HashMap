@@ -16,6 +16,7 @@ module HashMap
 
     def set(key: nil, value: nil)
       add_to_bucket(key: key, value: value)
+      resize_hash_table if actual_load_factor > load_factor
     end
 
     def get(key: nil)
@@ -93,13 +94,27 @@ module HashMap
 
     private
 
-    attr_accessor :buckets
-    attr_reader :hash_func, :capacity, :load_factor
+    attr_accessor :buckets, :capacity
+    attr_reader :hash_func, :load_factor
 
     def hash(key: nil)
       raise NoMethodError, 'Hash function not defined' unless @hash_func
 
       hash_func.call(key: key) if @hash_func
+    end
+
+    def actual_load_factor
+      1.0 * length / capacity
+    end
+
+    def resize_hash_table
+      cur_entries = entries
+      self.capacity = capacity * 2
+      clear
+      self.buckets = Array.new(capacity) { LinkedList.new }
+      cur_entries.each do |key, value|
+        set(key: key, value: value)
+      end
     end
 
     def index(key: nil)
