@@ -66,6 +66,7 @@ describe HashMap::LinkedList do
       arr.each do |key, value|
         expect(ll.find(key: key)).to eql(value)
       end
+      expect(ll.find(key: 'Happy')).to be_nil
     end
   end
 

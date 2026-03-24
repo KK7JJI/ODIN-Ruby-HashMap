@@ -19,6 +19,12 @@ module HashMap
       self.length += 1
     end
 
+    def get(key: nil)
+      return nil if empty?
+
+      find_key_in_buckets(key: key)
+    end
+
     def to_a
       result = []
       buckets.each do |bucket|
@@ -35,7 +41,7 @@ module HashMap
       false
     end
 
-    def inspect
+    def to_s
       puts '==========================='
       puts "     length: #{length}"
       puts "   capacity: #{capacity}"
@@ -77,6 +83,16 @@ module HashMap
       raise IndexError if idx.negative? || idx >= @buckets.length
 
       buckets[idx].append(key: key, value: value)
+    end
+
+    def find_key_in_buckets(key: nil)
+      buckets.each do |bucket|
+        value = bucket.find(key: key)
+        return value unless value.nil?
+      end
+
+      # return nil if key not found.
+      nil
     end
   end
 

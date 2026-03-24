@@ -34,7 +34,6 @@ describe HashMap::HashMap do
     let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
     it 'returns key, value in array - many pair' do
       arr = arr1 + arr2
-      puts arr.inspect
       arr.each do |key, value|
         hm.set(key: key, value: value)
       end
@@ -46,6 +45,33 @@ describe HashMap::HashMap do
       result.each do |pair|
         expect(arr.include?(pair)).to eql(true)
       end
+    end
+  end
+
+  describe '#get(key)' do
+    it 'returns nil on empty list' do
+      expect(hm.get(key: 'test')).to be_nil
+    end
+    it 'returns nil when key not found' do
+      hm.set(key: 'Happy', value: 'Happy Valley')
+      expect(hm.get(key: 'test')).to be_nil
+    end
+    it 'returns value when key found single item' do
+      hm.set(key: 'Happy', value: 'Happy Valley')
+      expect(hm.get(key: 'Happy')).to eql('Happy Valley')
+    end
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'finds individual keys and returns corresponding values' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      arr.each do |key, value|
+        expect(hm.get(key: key)).to eql(value)
+      end
+      expect(hm.get(key: 'test')).to be_nil
     end
   end
 end
