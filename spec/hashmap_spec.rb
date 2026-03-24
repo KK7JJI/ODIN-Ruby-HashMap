@@ -207,4 +207,20 @@ describe HashMap::HashMap do
       expect(arr.all? { |entry| result.include?(entry) }).to eql(true)
     end
   end
+
+  describe '#clear' do
+    let(:arr1) { (0..25).to_a.map { |i| [(i + 'A'.ord).chr, (i + 'A'.ord).chr * 5] } }
+    let(:arr2) { (0..25).to_a.map { |i| [(i + 'a'.ord).chr, (i + 'a'.ord).chr * 5] } }
+    it 'retrieves all entries in hash' do
+      arr = arr1 + arr2
+      arr.each do |key, value|
+        hm.set(key: key, value: value)
+      end
+
+      expect(hm.empty?).to eql(false)
+      result = hm.clear
+      expect(hm.empty?).to eql(true)
+      expect(hm.length).to eql(0)
+    end
+  end
 end

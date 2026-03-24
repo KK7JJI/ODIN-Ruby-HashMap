@@ -35,6 +35,13 @@ module HashMap
       remove_key_from_hash(key: key)
     end
 
+    def clear
+      self.buckets = Array.new(capacity) { LinkedList.new }
+      self.length = 0
+
+      nil
+    end
+
     def keys
       to_a.map { |key, _value| key }
     end
